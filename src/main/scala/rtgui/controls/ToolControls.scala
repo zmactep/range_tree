@@ -9,8 +9,7 @@ import rtgui.panels.DrawingPane
  * Date: 04.12.13
  * Time: 20:17
  */
-class ToolControls(d : DrawingPane) {
-  val drawing  = d
+class ToolControls(val drawing : DrawingPane) {
 
   lazy val toggleButton = new ToggleButton {
     text = "Draw rectangles"

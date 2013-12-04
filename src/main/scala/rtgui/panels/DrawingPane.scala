@@ -14,11 +14,10 @@ import javafx.event.EventHandler
  * Date: 04.12.13
  * Time: 20:53
  */
-class DrawingPane(s : Stage, m : RangeTreeModel) {
-  val stage    = s
+class DrawingPane(val stage : Stage, model : RangeTreeModel) {
   val width    = 100.0
   val controls = new ToolControls(this)
-  val adapter  = new ModelAdapter(m, this)
+  val adapter  = new ModelAdapter(model, this)
 
   lazy val rect = new Rectangle() {
     width  <== stage.width * 0.82

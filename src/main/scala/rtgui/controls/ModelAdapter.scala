@@ -12,10 +12,7 @@ import scala.collection.mutable.ArrayBuffer
  * Date: 04.12.13
  * Time: 22:21
  */
-class ModelAdapter(m : RangeTreeModel, d : DrawingPane) {
-  val model   = m
-  val drawing = d
-
+class ModelAdapter(val model : RangeTreeModel, val drawing : DrawingPane) {
   var start : (Double, Double) = (0, 0)
   var end   : (Double, Double) = (0, 0)
 
@@ -36,7 +33,7 @@ class ModelAdapter(m : RangeTreeModel, d : DrawingPane) {
   def getView : Iterable[Rectangle] = {
     val array = ArrayBuffer[Rectangle](getQuery)
 
-    m.getPoints.foreach(point => {
+    model.getPoints.foreach(point => {
       val coord = drawing.pointVisualPosition(point.x, point.y)
       val radius = 3
       array += new Rectangle {
@@ -44,7 +41,7 @@ class ModelAdapter(m : RangeTreeModel, d : DrawingPane) {
         y = coord._2 - radius/2
         width = radius
         height = radius
-        fill = if (!m.getLast.contains(point)) Color.RED else Color.GREEN
+        fill = if (!model.getLast.contains(point)) Color.RED else Color.GREEN
       }
     })
 

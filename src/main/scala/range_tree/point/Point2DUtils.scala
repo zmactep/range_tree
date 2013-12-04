@@ -8,8 +8,7 @@ package range_tree.point
  */
 object Point2DUtils {
   def binarySearch(array : Array[Point2D], v : Point2D, less : (Point2D, Point2D) => Boolean) : Int = {
-    var left = 0
-    var right = array.size - 1
+    var (left, right) = (0, array.size - 1)
     while (left <= right) {
       val mid = left + (right - left) / 2
       if (right - left == 1) {

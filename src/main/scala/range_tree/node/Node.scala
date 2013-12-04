@@ -6,9 +6,7 @@ package range_tree.node
  * Date: 26.11.13
  * Time: 18:24
  */
-class Node(_start : Int, _end : Int) {
-  var start : Int = _start
-  var end   : Int = _end
+class Node(var start : Int, var end : Int) {
 
   def index : Int = start + (end - start + 1) / 2 - 1
 

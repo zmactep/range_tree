@@ -15,8 +15,7 @@ object FractionUtils {
 
     def build(node : Node) : Unit = {
       val index : Int = node.index
-      val start : Int = node.start
-      val end   : Int = node.end
+      val (start, end) : (Int, Int) = (node.start, node.end)
 
       if (node.lc() != null) {
         fractions(node.index) = new Fraction(points.slice(node.start, node.end))
@@ -40,8 +39,7 @@ object FractionUtils {
     }
 
     def link(fraction : Fraction, child : Fraction, parents : Array[Int]) : Unit = {
-      var p : Int = 0
-      var c : Int = 0
+      var (p, c) : (Int, Int) = (0, 0)
       while (p < parents.size && c < child.points.size) {
         if (child.points(c).y >= fraction.points(p).y) {
           parents(p) = c

@@ -12,15 +12,9 @@ import range_tree.fraction.{FractionUtils, Fraction}
  * Date: 26.11.13
  * Time: 17:43
  */
-class RangeTree {
-  private var points    : Array[Point2D]  = null
-  private var fractions : Array[Fraction] = null
-
-  def this(points : Iterable[Point2D]) = {
-    this()
-    this.points = points.toArray.sortWith(_.lessByX(_))
-    this.fractions = FractionUtils.makeFractions(rootNode, this.points)
-  }
+class RangeTree(_points : Iterable[Point2D]) {
+  private val points    : Array[Point2D]  = _points.toArray.sortWith(_.lessByX(_))
+  private val fractions : Array[Fraction] = FractionUtils.makeFractions(rootNode, this.points)
 
   def getPoints : Iterable[Point2D] = points
 
@@ -61,7 +55,7 @@ class RangeTree {
       }
     }
 
-    val node = splitVertical(left_top.x, right_bottom.x)
+    val node = splitNode(left_top.x, right_bottom.x)
     if (node != null) {
       val fraction = fractions(node.index)
       val lowest = Point2DUtils.binarySearch(fraction.points, new Point2D(Double.NegativeInfinity, right_bottom.y),
@@ -81,17 +75,17 @@ class RangeTree {
     result
   }
 
-  private def splitVertical(start : Double, end : Double) : Node = {
-    def splitVerticalByNode(node : Node, start : Double, end : Double) : Node = {
+  private[this] def splitNode(start : Double, end : Double) : Node = {
+    def splitNodeBy(node : Node, start : Double, end : Double) : Node = {
       node match {
         case null => null
         case _    => {
           val point = points(node.index)
           if (point.x >= end) {
-            splitVerticalByNode(node.lc(), start, end)
+            splitNodeBy(node.lc(), start, end)
           }
           else if (point.x < start) {
-            splitVerticalByNode(node.rc(), start, end)
+            splitNodeBy(node.rc(), start, end)
           }
           else {
             node
@@ -100,8 +94,8 @@ class RangeTree {
       }
     }
 
-    splitVerticalByNode(rootNode, start, end)
+    splitNodeBy(rootNode, start, end)
   }
 
-  private def rootNode : Node = NodeUtils.makeNode(0, points.length)
+  private[this] def rootNode : Node = NodeUtils.makeNode(0, points.length)
 }
