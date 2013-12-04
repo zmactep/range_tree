@@ -5,7 +5,7 @@ Simple range tree implementation with fractional cascading optimization on Scala
 
 Just run:
 
-'''
+```
 mvn clean package
 java -jar target/range_tree-1.0-SNAPSHOT.jar
-'''
+```
